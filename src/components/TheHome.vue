@@ -583,8 +583,7 @@ table {
   text-align: center;
   border-bottom: 2px solid #ddd;
 }
-.days-table {
-}
+
 .days-table th {
   padding: 12px;
   text-align: center;

@@ -15,20 +15,29 @@ export default defineComponent({
   components: { Line },
   props: {
     hourlyForecast: {
-      type: Array as () => Array<{ timestamp_local: string; temp: number; clouds: number }>,
+      type: Array as () => Array<{ datetime: string; temp: number; weather: { description: string }; clouds: number }>,
       required: true,
     },
   },
   computed: {
+    // Mapowanie danych na odpowiedni format
+    mappedHourlyForecast() {
+      return this.hourlyForecast.map((item) => ({
+        timestamp_local: item.datetime, // Zmieniamy `datetime` na `timestamp_local`
+        temp: item.temp,
+        clouds: item.clouds,
+      }));
+    },
     chartData() {
-      const labels = this.hourlyForecast.map((hour) => {
+      const labels = this.mappedHourlyForecast.map((hour) => {
         const date = new Date(hour.timestamp_local);
         const hours = date.getUTCHours().toString().padStart(2, "0");
         const minutes = date.getUTCMinutes().toString().padStart(2, "0");
         return `${hours}:${minutes}`;
       });
-      const tempData = this.hourlyForecast.map((hour) => hour.temp.toFixed(1));
-      const cloudData = this.hourlyForecast.map((hour) => hour.clouds);
+
+      const tempData = this.mappedHourlyForecast.map((hour) => hour.temp);
+      const cloudData = this.mappedHourlyForecast.map((hour) => hour.clouds);
 
       return {
         labels,
