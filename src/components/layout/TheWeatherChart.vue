@@ -20,10 +20,9 @@ export default defineComponent({
     },
   },
   computed: {
-    // Mapowanie danych na odpowiedni format
     mappedHourlyForecast() {
       return this.hourlyForecast.map((item) => ({
-        timestamp_local: item.datetime, // Zmieniamy `datetime` na `timestamp_local`
+        timestamp_local: item.datetime,
         temp: item.temp,
         clouds: item.clouds,
       }));
